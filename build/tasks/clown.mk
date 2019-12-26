@@ -12,6 +12,7 @@ SHA256 := prebuilts/build-tools/path/$(HOST_OS)-x86/sha256sum
 clown: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) mv $(INTERNAL_OTA_PACKAGE_TARGET) $(CLOWN_TARGET_PACKAGE)
 	$(hide) $(SHA256) $(CLOWN_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(CLOWN_TARGET_PACKAGE).sha256sum
+	$(hide) ./vendor/clown/build/tools/createjson.sh $(TARGET_DEVICE) $(PRODUCT_OUT) $(CLOWN_VERSION).zip
 	@echo "Done"
 	@echo -e "\t ==================-Package complete-======================"
 	@echo -e "\t ███████████████████████████████████████████████ "
