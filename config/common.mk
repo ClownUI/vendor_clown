@@ -212,6 +212,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     BtHelper
     
+# Charger
+PRODUCT_PACKAGES += \
+    product_charger_res_images
+
 # Config
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig \
