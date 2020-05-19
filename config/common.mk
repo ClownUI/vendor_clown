@@ -223,6 +223,7 @@ PRODUCT_PACKAGE_OVERLAYS += \
 PRODUCT_PACKAGES += \
     CustomPixelLauncherOverlay \
     DocumentsUIOverlay \
+    NavigationBarNoHintOverlay \
     NetworkStackOverlay
 
 # Translations
