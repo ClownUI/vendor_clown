@@ -210,7 +210,8 @@ PRODUCT_COPY_FILES += \
 endif
 
 PRODUCT_PACKAGES += \
-    NetworkStackOverlay
+    NetworkStackOverlay \
+    NavigationBarNoHintOverlay
 
 # Apps
 ifeq ($(APERTURE_SUPPORT),true)
