@@ -34,6 +34,7 @@ SOONG_CONFIG_clownGlobalVars += \
     disable_bluetooth_le_set_host_feature \
     gralloc_handle_has_reserved_size \
     target_init_vendor_lib \
+    camera_needs_client_info \
     target_inputdispatcher_skip_event_key \
     target_ld_shim_libs \
     target_surfaceflinger_udfps_lib \
@@ -64,6 +65,7 @@ SOONG_CONFIG_clownQcomVars_uses_pre_uplink_features_netmgrd := $(TARGET_USES_PRE
 SOONG_CONFIG_clownGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_oppo_camera := $(TARGET_USES_OPPO_CAMERA)
+SOONG_CONFIG_clownGlobalVars_camera_needs_client_info := $(TARGET_CAMERA_NEEDS_CLIENT_INFO)
 
 
 # Set default values
