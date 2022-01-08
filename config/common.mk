@@ -115,7 +115,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     OmniJaws \
     NavigationBarNoHintOverlay \
-    ThemedIconsOverlay
+    ThemedIconsOverlay \
+    AndroidBlackThemeOverlay
 
 # One Handed mode
 PRODUCT_PRODUCT_PROPERTIES += \
