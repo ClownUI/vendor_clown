@@ -202,6 +202,7 @@ PRODUCT_PACKAGE_OVERLAYS += \
     vendor/clown/overlay/common \
 
 PRODUCT_PACKAGES += \
+    AndroidBlackThemeOverlay \
     DocumentsUIOverlay \
     NetworkStackOverlay
 
