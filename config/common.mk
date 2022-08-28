@@ -114,7 +114,8 @@ PRODUCT_PACKAGES += \
 # ClownUI packages
 PRODUCT_PACKAGES += \
     OmniJaws \
-    NavigationBarNoHintOverlay
+    NavigationBarNoHintOverlay \
+    ThemedIconsOverlay
 
 # One Handed mode
 PRODUCT_PRODUCT_PROPERTIES += \
