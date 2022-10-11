@@ -176,6 +176,7 @@ endif
 
 PRODUCT_PACKAGES += \
     LineageSettingsProvider \
+    BatteryStatsViewer \
     MatLog \
     Updater
 
