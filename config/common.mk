@@ -75,6 +75,11 @@ PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 # Enable support for APEX updates
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
+# Enable whole-program R8 Java optimizations for SystemUI and system_server,
+# but also allow explicit overriding for testing and development.
+SYSTEM_OPTIMIZE_JAVA ?= true
+SYSTEMUI_OPTIMIZE_JAVA ?= true
+
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images \
