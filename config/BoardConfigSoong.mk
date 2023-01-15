@@ -53,7 +53,8 @@ SOONG_CONFIG_clownGlobalVars += \
     target_trust_usb_control_enable \
     target_trust_usb_control_disable \
     uses_egl_display_array \
-    uses_oplus_camera
+    uses_oplus_camera \
+    uses_nothing_camera
 
 SOONG_CONFIG_NAMESPACES += clownNvidiaVars
 SOONG_CONFIG_clownNvidiaVars += \
@@ -83,6 +84,7 @@ SOONG_CONFIG_clownQcomVars_qti_vibrator_use_effect_stream := $(TARGET_QTI_VIBRAT
 SOONG_CONFIG_clownQcomVars_supports_extended_compress_format := $(AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT)
 SOONG_CONFIG_clownQcomVars_uses_pre_uplink_features_netmgrd := $(TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD)
 SOONG_CONFIG_clownGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
+SOONG_CONFIG_clownGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
