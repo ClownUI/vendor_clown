@@ -86,12 +86,6 @@ ifneq ($(TARGET_DISABLE_EPPE),true)
 $(call enforce-product-packages-exist-internal,$(wildcard device/*/$(CLOWN_BUILD)/$(TARGET_PRODUCT).mk),product_manifest.xml rild Calendar Launcher3 Launcher3Go Launcher3QuickStep Launcher3QuickStepGo android.hidl.memory@1.0-impl.vendor vndk_apex_snapshot_package)
 endif
 
-PRODUCT_PACKAGES += \
-    Updater
-
-PRODUCT_COPY_FILES += \
-    vendor/clown/prebuilt/common/etc/init/init.clown-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.clown-updater.rc
-
 # Config
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig \
@@ -202,6 +196,9 @@ CUSTOM_LOCALES += \
     gd_GB \
     cy_GB \
     fur_IT
+
+# OTA
+$(call inherit-product, vendor/clown/config/ota.mk)
 
 include vendor/clown/config/version.mk
 
