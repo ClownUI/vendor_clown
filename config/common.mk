@@ -211,6 +211,10 @@ endif
 
 PRODUCT_PACKAGES += \
     NetworkStackOverlay
+    
+# Apps
+PRODUCT_PACKAGES += \
+    Aperture
 
 # Fonts
 include vendor/clown/config/fonts.mk
