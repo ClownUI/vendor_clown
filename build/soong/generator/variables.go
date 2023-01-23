@@ -6,12 +6,12 @@ import (
 	"android/soong/android"
 )
 
-func protonExpandVariables(ctx android.ModuleContext, in string) string {
-	protonVars := ctx.Config().VendorConfig("protonVarsPlugin")
+func clownExpandVariables(ctx android.ModuleContext, in string) string {
+	clownVars := ctx.Config().VendorConfig("clownVarsPlugin")
 
 	out, err := android.Expand(in, func(name string) (string, error) {
-		if protonVars.IsSet(name) {
-			return protonVars.String(name), nil
+		if clownVars.IsSet(name) {
+			return clownVars.String(name), nil
 		}
 		// This variable is not for us, restore what the original
 		// variable string will have looked like for an Expand
