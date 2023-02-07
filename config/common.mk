@@ -192,8 +192,9 @@ PRODUCT_PACKAGES += \
 
 # Themes
 PRODUCT_PACKAGES += \
-    BlackTheme
-
+    BlackTheme \
+    ThemePicker
+    
 # BootAnimation
 include vendor/clown/config/bootanimation.mk
 
