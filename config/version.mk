@@ -50,6 +50,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
   ro.clown.buildtype=$(CLOWN_BUILD_TYPE) \
   ro.clown.ziptype=$(CLOWN_BUILD_ZIP_TYPE) \
   ro.clown.build_date=$(CLOWN_BUILD_DATE) \
+  ro.clown.device=$(CLOWN_BUILD) \
   ro.clown.build_date_utc=$(CLOWN_BUILD_DATE_UTC) \
   ro.aosp.revision=$(AOSP_REVISION) \
   ro.clown.maintainer=$(CLOWN_MAINTAINER)
