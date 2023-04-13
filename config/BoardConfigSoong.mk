@@ -58,6 +58,7 @@ SOONG_CONFIG_clownGlobalVars += \
     uses_egl_display_array \
     needs_oplus_tag \
     uses_oplus_camera \
+    uses_oppo_camera \
     uses_nothing_camera
 
 SOONG_CONFIG_NAMESPACES += clownNvidiaVars
@@ -95,7 +96,7 @@ SOONG_CONFIG_clownGlobalVars_camera_override_format_from_reserved := $(TARGET_CA
 SOONG_CONFIG_clownGlobalVars_gralloc_handle_has_ubwcp_format := $(TARGET_GRALLOC_HANDLE_HAS_UBWCP_FORMAT)
 SOONG_CONFIG_clownGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
-
+SOONG_CONFIG_clownGlobalVars_uses_oppo_camera := $(TARGET_USES_OPPO_CAMERA)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
