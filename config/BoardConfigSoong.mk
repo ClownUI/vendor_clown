@@ -42,6 +42,7 @@ SOONG_CONFIG_clownGlobalVars += \
     target_trust_usb_control_disable \
     uses_egl_display_array \
     uses_oplus_camera \
+    uses_oppo_camera \
     uses_nothing_camera
 
 SOONG_CONFIG_NAMESPACES += clownQcomVars
@@ -62,7 +63,7 @@ SOONG_CONFIG_clownQcomVars_supports_extended_compress_format := $(AUDIO_FEATURE_
 SOONG_CONFIG_clownQcomVars_uses_pre_uplink_features_netmgrd := $(TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD)
 SOONG_CONFIG_clownGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
-
+SOONG_CONFIG_clownGlobalVars_uses_oppo_camera := $(TARGET_USES_OPPO_CAMERA)
 
 
 # Set default values
