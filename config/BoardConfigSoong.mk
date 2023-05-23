@@ -45,6 +45,7 @@ SOONG_CONFIG_clownGlobalVars += \
     target_trust_usb_control_disable \
     uses_egl_display_array \
     uses_oplus_camera \
+    camera_needs_client_info_lib_oplus \
     uses_oppo_camera \
     uses_nothing_camera \
     needs_oplus_tag
@@ -72,6 +73,7 @@ SOONG_CONFIG_clownGlobalVars_uses_oppo_camera := $(TARGET_USES_OPPO_CAMERA)
 SOONG_CONFIG_clownGlobalVars_camera_needs_client_info := $(TARGET_CAMERA_NEEDS_CLIENT_INFO)
 SOONG_CONFIG_clownGlobalVars_camera_needs_client_info_lib := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB)
 SOONG_CONFIG_clownGlobalVars_needs_camera_boottime := $(TARGET_CAMERA_BOOTTIME_TIMESTAMP)
+SOONG_CONFIG_clownGlobalVars_camera_needs_client_info_lib_oplus := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB_OPLUS)
 
 # Set default values
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS ?= 0
