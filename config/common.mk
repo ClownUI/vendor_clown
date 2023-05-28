@@ -211,10 +211,12 @@ endif
 
 PRODUCT_PACKAGES += \
     NetworkStackOverlay
-    
+
 # Apps
+ifeq ($(APERTURE_SUPPORT),true)
 PRODUCT_PACKAGES += \
     Aperture
+endif
 
 # Fonts
 include vendor/clown/config/fonts.mk
