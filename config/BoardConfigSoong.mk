@@ -59,7 +59,8 @@ SOONG_CONFIG_clownGlobalVars += \
     needs_oplus_tag \
     uses_oplus_camera \
     uses_oppo_camera \
-    uses_nothing_camera
+    uses_nothing_camera \
+    include_miui_camera
 
 SOONG_CONFIG_NAMESPACES += clownNvidiaVars
 SOONG_CONFIG_clownNvidiaVars += \
@@ -100,6 +101,7 @@ SOONG_CONFIG_clownGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_oppo_camera := $(TARGET_USES_OPPO_CAMERA)
 SOONG_CONFIG_clownQcomVars_qti_vibrator_use_effect_stream := $(TARGET_QTI_VIBRATOR_USE_EFFECT_STREAM)
+SOONG_CONFIG_clownGlobalVars_include_miui_camera := $(TARGET_INCLUDES_MIUI_CAMERA)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
