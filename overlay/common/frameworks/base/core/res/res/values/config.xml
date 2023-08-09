@@ -158,9 +158,6 @@
        <item>app_cloning/enable_app_cloning_building_blocks=true</item>
     </string-array>
     
-    <!-- Flag indicating which package name can access DeviceConfig table -->
-    <string name="config_deviceConfiguratorPackageName" translatable="false">org.protonaosp.deviceconfig</string>
-
     <!-- Wallpaper cropper package. Used as the default cropper if the active launcher doesn't
          handle wallpaper cropping.
     -->
