@@ -84,7 +84,8 @@ PRODUCT_RESTRICT_VENDOR_FILES := false
 
 # ClownUI packages
 PRODUCT_PACKAGES += \
-    RepainterServicePriv
+    RepainterServicePriv \
+    OmniJaws
 
 ifeq ($(CLOWN_BUILD_VARIANT),OFFICIAL)
 PRODUCT_PACKAGES += \
