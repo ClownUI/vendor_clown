@@ -210,4 +210,8 @@
         <item>Pixel XL</item> <!-- Build.MODEL -->
         <item>google/marlin/marlin:7.1.2/NJH47F/4146041:user/release-keys</item> <!-- Build.FINGERPRINT -->
     </string-array>
+    
+    <!-- Whether the lock screen is allowed to run its own live wallpaper,
+         different from the home screen wallpaper. -->
+    <bool name="config_independentLockscreenLiveWallpaper">true</bool>
 </resources>
