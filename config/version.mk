@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CLOWN_MOD_VERSION := Queen
-CLOWN_ANDROID = 13.3
+CLOWN_MOD_VERSION := Pennywise
+CLOWN_ANDROID = 14.0.1
 CLOWN_BUILD_TYPE := UNOFFICIAL
 CLOWN_MAINTAINER ?= UNKNOWN
 
