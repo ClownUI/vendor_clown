@@ -46,6 +46,7 @@ SOONG_CONFIG_clownGlobalVars += \
     uses_egl_display_array \
     uses_oplus_camera \
     camera_needs_client_info_lib_oplus \
+    camera_override_format_from_reserved \
     uses_oppo_camera \
     uses_nothing_camera \
     needs_oplus_tag
@@ -74,9 +75,11 @@ SOONG_CONFIG_clownGlobalVars_camera_needs_client_info := $(TARGET_CAMERA_NEEDS_C
 SOONG_CONFIG_clownGlobalVars_camera_needs_client_info_lib := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB)
 SOONG_CONFIG_clownGlobalVars_needs_camera_boottime := $(TARGET_CAMERA_BOOTTIME_TIMESTAMP)
 SOONG_CONFIG_clownGlobalVars_camera_needs_client_info_lib_oplus := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB_OPLUS)
+SOONG_CONFIG_clownGlobalVars_camera_override_format_from_reserved := $(TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED)
 
 # Set default values
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS ?= 0
+TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED ?= false
 TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE ?= false
 TARGET_INIT_VENDOR_LIB ?= vendor_init
 TARGET_INPUTDISPATCHER_SKIP_EVENT_KEY ?= 0
