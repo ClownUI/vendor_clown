@@ -176,6 +176,10 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full-3.9.1-vendorcompat \
     libprotobuf-cpp-lite-3.9.1-vendorcompat
 
+# Disable async MTE on system_server
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    persist.arm64.memtag.system_server=off
+
 # Camera
 #ifneq ($(PRODUCT_NO_CAMERA),true)
 #PRODUCT_PACKAGES += \
