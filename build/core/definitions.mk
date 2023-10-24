@@ -4,6 +4,3 @@ endef
 
 # Include board/platform macros
 include vendor/clown/build/core/utils.mk
-
-# Include vendor platform definitions
-include vendor/clown/build/core/vendor/*.mk
