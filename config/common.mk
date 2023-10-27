@@ -212,10 +212,10 @@ PRODUCT_PACKAGES += \
     NavigationBarNoHintOverlay
 
 # Apps
-ifeq ($(APERTURE_SUPPORT),true)
-PRODUCT_PACKAGES += \
+# ifeq ($(APERTURE_SUPPORT),true)
+# PRODUCT_PACKAGES += \
     Aperture
-endif
+# endif
 
 # Fonts
 # include vendor/clown/config/fonts.mk
