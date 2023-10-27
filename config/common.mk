@@ -218,6 +218,6 @@ PRODUCT_PACKAGES += \
 endif
 
 # Fonts
-include vendor/clown/config/fonts.mk
+# include vendor/clown/config/fonts.mk
 
 include vendor/clown/config/version.mk
