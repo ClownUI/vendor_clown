@@ -177,6 +177,7 @@ endif
 PRODUCT_PACKAGES += \
     LineageSettingsProvider \
     BatteryStatsViewer \
+    GameSpace \
     MatLog \
     OmniStyle \
     OmniJaws \
