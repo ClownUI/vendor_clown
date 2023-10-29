@@ -1,25 +1,17 @@
-# Branding
-$(call inherit-product, vendor/aosp/config/branding.mk)
-
-PRODUCT_BRAND ?= PixelExperience
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.com.google.clientidbase=android-google
-
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.com.google.clientidbase=android-google
-
 else
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
-
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
-
 endif
+
+# Google apps and services
+
+$(call inherit-product, vendor/gms/products/*.mk)
 
 # BtHelper
 PRODUCT_PACKAGES += \
@@ -50,15 +42,15 @@ endif
 
 # Some permissions
 PRODUCT_COPY_FILES += \
-    vendor/aosp/config/permissions/privapp-permissions-lineagehw.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-lineagehw.xml
+    vendor/clown/config/permissions/privapp-permissions-lineagehw.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-lineagehw.xml
 
 # Copy all custom init rc files
 PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/etc/init/init.pixelexperience-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.pixelexperience-updater.rc
+    vendor/clown/prebuilt/common/etc/init/init.clown-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.clown-updater.rc
 
 # Enable Android Beam on all targets
 PRODUCT_COPY_FILES += \
-    vendor/aosp/config/permissions/android.software.nfc.beam.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.nfc.beam.xml
+    vendor/clown/config/permissions/android.software.nfc.beam.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.nfc.beam.xml
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
@@ -74,7 +66,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Power whitelist
 PRODUCT_COPY_FILES += \
-    vendor/aosp/config/permissions/custom-power-whitelist.xml:system/etc/sysconfig/custom-power-whitelist.xml
+    vendor/clown/config/permissions/custom-power-whitelist.xml:system/etc/sysconfig/custom-power-whitelist.xml
 
 # Do not include art debug targets
 PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
@@ -106,10 +98,10 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Overlays
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
-    vendor/aosp/overlay
+    vendor/clown/overlay
 
 PRODUCT_PACKAGE_OVERLAYS += \
-    vendor/aosp/overlay/common
+    vendor/clown/overlay/common
 
 # TouchGestures
 PRODUCT_PACKAGES += \
@@ -121,7 +113,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
-    SystemUIGoogle \
+    SystemUI \
     NexusLauncherRelease
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -182,47 +174,30 @@ endif
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.boot.vendor.overlay.theme=com.android.internal.systemui.navbar.gestural
 
-# Pixel customization
-TARGET_SUPPORTS_GOOGLE_RECORDER ?= true
-TARGET_INCLUDE_STOCK_ARCORE ?= true
-TARGET_INCLUDE_LIVE_WALLPAPERS ?= true
-TARGET_SUPPORTS_QUICK_TAP ?= false
-TARGET_SUPPORTS_CALL_RECORDING ?= true
-
 # Face Unlock
-TARGET_FACE_UNLOCK_SUPPORTED ?= true
-ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
-PRODUCT_PACKAGES += \
+# TARGET_FACE_UNLOCK_SUPPORTED ?= true
+# ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
+# PRODUCT_PACKAGES += \
     FaceUnlockService
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+# PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.face_unlock_service.enabled=$(TARGET_FACE_UNLOCK_SUPPORTED)
-PRODUCT_COPY_FILES += \
+# PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
-endif
-
-# NexusLauncher resources
-PRODUCT_PACKAGES += \
-    NexusLauncherResOverlay
+# endif
 
 # Audio
-$(call inherit-product, vendor/aosp/config/audio.mk)
+$(call inherit-product, vendor/clown/config/audio.mk)
 
 # Bootanimation
-$(call inherit-product, vendor/aosp/config/bootanimation.mk)
+$(call inherit-product, vendor/clown/config/bootanimation.mk)
 
 # Fonts
-$(call inherit-product, vendor/aosp/config/fonts.mk)
+$(call inherit-product, vendor/clown/config/fonts.mk)
 
-# GMS
-$(call inherit-product, vendor/gms/products/gms.mk)
+# telephony
+$(call inherit-product, vendor/clown/config/telephony.mk)
 
-# OTA
-$(call inherit-product, vendor/aosp/config/ota.mk)
-
-# RRO Overlays
-$(call inherit-product, vendor/aosp/config/rro_overlays.mk)
-
-# Pixel Framework
-$(call inherit-product, vendor/pixel-framework/config.mk)
+# Version
+include vendor/clown/config/version.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
