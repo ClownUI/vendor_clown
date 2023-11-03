@@ -2,10 +2,10 @@
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_PROPERTIES += \
     ro.com.google.clientidbase=android-google
 else
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_PROPERTIES += \
     ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
 endif
 
@@ -17,7 +17,7 @@ $(call inherit-product, vendor/gms/products/*.mk)
 PRODUCT_PACKAGES += \
     BtHelper
 
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_PROPERTIES+= \
     dalvik.vm.debug.alloc=0 \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
     ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
@@ -29,15 +29,15 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 ifeq ($(TARGET_BUILD_VARIANT),eng)
 # Disable ADB authentication
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=0
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += persist.sys.usb.config=adb
+PRODUCT_SYSTEM_PROPERTIES+= ro.adb.secure=0
+PRODUCT_SYSTEM_PROPERTIES+= persist.sys.usb.config=adb
 else
 # Enable ADB authentication
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += persist.sys.usb.config=none
+PRODUCT_SYSTEM_PROPERTIES+= ro.adb.secure=1
+PRODUCT_SYSTEM_PROPERTIES+= persist.sys.usb.config=none
 
 # Disable extra StrictMode features on all non-engineering builds
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += persist.sys.strictmode.disable=true
+PRODUCT_SYSTEM_PROPERTIES+= persist.sys.strictmode.disable=true
 endif
 
 # Some permissions
@@ -57,7 +57,7 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:$(TARGET_COPY_OUT_PRODUCT)/usr/keylayout/Vendor_045e_Product_0719.kl
 
 # Enforce privapp-permissions whitelist
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_PROPERTIES+= \
     ro.control_privapp_permissions=enforce
 
 # Power whitelist
@@ -85,11 +85,11 @@ PRODUCT_PACKAGES += \
     mount.ntfs
 
 # Storage manager
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_PROPERTIES+= \
     ro.storage_manager.enabled=true
 
 # Media
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_PROPERTIES+= \
     media.recorder.show_manufacturer_and_model=true
 
 # Overlays
@@ -116,7 +116,7 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI \
     NexusLauncherRelease
 
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_PROPERTIES+= \
     dalvik.vm.systemuicompilerfilter=speed
 
 # SystemUI plugins
@@ -184,7 +184,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
 # PRODUCT_PACKAGES += \
     FaceUnlockService
-# PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+# PRODUCT_SYSTEM_PROPERTIES += \
     ro.face_unlock_service.enabled=$(TARGET_FACE_UNLOCK_SUPPORTED)
 # PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
