@@ -68,7 +68,9 @@ SOONG_CONFIG_clownNvidiaVars += \
 SOONG_CONFIG_NAMESPACES += clownQcomVars
 SOONG_CONFIG_clownQcomVars += \
     supports_extended_compress_format \
-    uses_pre_uplink_features_netmgrd 
+    uses_pre_uplink_features_netmgrd \
+    qti_vibrator_effect_lib \
+    qti_vibrator_use_effect_stream 
 
 # Only create display_headers_namespace var if dealing with UM platforms to avoid breaking build for all other platforms
 ifneq ($(filter $(UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
@@ -97,6 +99,7 @@ SOONG_CONFIG_clownGlobalVars_gralloc_handle_has_ubwcp_format := $(TARGET_GRALLOC
 SOONG_CONFIG_clownGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_oppo_camera := $(TARGET_USES_OPPO_CAMERA)
+SOONG_CONFIG_clownQcomVars_qti_vibrator_use_effect_stream := $(TARGET_QTI_VIBRATOR_USE_EFFECT_STREAM)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
@@ -111,6 +114,7 @@ TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_DEADLINE ?= false
 TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_TOGGLE ?= true
 TARGET_INIT_VENDOR_LIB ?= vendor_init
 TARGET_INPUTDISPATCHER_SKIP_EVENT_KEY ?= 0
+TARGET_QTI_VIBRATOR_EFFECT_LIB ?= libqtivibratoreffect
 TARGET_SURFACEFLINGER_UDFPS_LIB ?= surfaceflinger_udfps_lib
 TARGET_GRALLOC_HANDLE_HAS_UBWCP_FORMAT ?= false
 TARGET_TRUST_USB_CONTROL_PATH ?= /proc/sys/kernel/deny_new_usb
@@ -143,6 +147,7 @@ SOONG_CONFIG_clownQcomVars_qcom_display_headers_namespace := vendor/qcom/opensou
 else
 SOONG_CONFIG_clownQcomVars_qcom_display_headers_namespace := $(QCOM_SOONG_NAMESPACE)/display
 endif
+SOONG_CONFIG_clownQcomVars_qti_vibrator_effect_lib := $(TARGET_QTI_VIBRATOR_EFFECT_LIB)
 
 ifneq ($(TARGET_USES_NQ_NFC),true)
 PRODUCT_SOONG_NAMESPACES += hardware/nxp
