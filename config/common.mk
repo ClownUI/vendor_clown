@@ -179,6 +179,7 @@ PRODUCT_PACKAGES += \
     BatteryStatsViewer \
     MatLog \
     OmniStyle \
+    OmniJaws \
     Updater
 
 PRODUCT_COPY_FILES += \
