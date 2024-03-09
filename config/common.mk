@@ -178,6 +178,7 @@ PRODUCT_PACKAGES += \
     LineageSettingsProvider \
     BatteryStatsViewer \
     MatLog \
+    OmniStyle \
     Updater
 
 PRODUCT_COPY_FILES += \
