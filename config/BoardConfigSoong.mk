@@ -38,6 +38,7 @@ SOONG_CONFIG_clownGlobalVars += \
     gralloc_handle_has_reserved_size \
     gralloc_handle_has_ubwcp_format \
     target_camera_package_name \
+    uses_miui_camera \
     target_health_charging_control_charging_path \
     target_health_charging_control_charging_enabled \
     target_health_charging_control_charging_disabled \
@@ -91,6 +92,7 @@ SOONG_CONFIG_clownQcomVars_supports_extended_compress_format := $(AUDIO_FEATURE_
 SOONG_CONFIG_clownQcomVars_uses_pre_uplink_features_netmgrd := $(TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD)
 SOONG_CONFIG_clownGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
 SOONG_CONFIG_clownGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
+SOONG_CONFIG_clownGlobalVars_uses_miui_camera := $(TARGET_USES_MIUI_CAMERA)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
