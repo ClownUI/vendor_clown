@@ -227,6 +227,9 @@ CUSTOM_LOCALES += \
 # Bootanimation
 include vendor/clown/config/bootanimation.mk
 
+# Fonts
+include vendor/clown/config/fonts.mk
+
 # Version
 include vendor/clown/config/version.mk
 
