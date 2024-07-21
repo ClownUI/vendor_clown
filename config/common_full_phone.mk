@@ -1,5 +1,5 @@
-# Inherit full common stuff
-$(call inherit-product, vendor/clown/config/common_full.mk)
+# Inherit mobile full common stuff
+$(call inherit-product, vendor/clown/config/common_mobile_full.mk)
 
 # Enable support of one-handed mode
 PRODUCT_PRODUCT_PROPERTIES += \
