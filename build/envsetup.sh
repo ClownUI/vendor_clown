@@ -1,4 +1,4 @@
-function __print_custom_functions_help() {
+function __print_clown_functions_help() {
 cat <<EOF
 Additional functions:
 - cout:            Changes directory to out.
@@ -7,7 +7,7 @@ Additional functions:
 - mmmp:            Builds all of the modules in the supplied directories and pushes them to the device.
 - aospremote:      Add git remote for matching AOSP repository.
 - cloremote:       Add git remote for matching CodeLinaro repository.
-- githubremote:    Add git remote for PixelOS-AOSP Github.
+- githubremote:    Add git remote for ClownUI Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
 - cmka:            Cleans and builds using mka.
@@ -76,12 +76,12 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the custom model name
+            # This is probably just the clown model name
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
 
-            lunch aosp_$target-$aosp_target_release-$variant
+            lunch aosp_$target-$clown_target_release-$variant
         fi
     fi
     return $?
@@ -92,7 +92,7 @@ alias bib=breakfast
 function eat()
 {
     if [ "$OUT" ] ; then
-        ZIPPATH=`ls -tr "$OUT"/PixelOS-*.zip | tail -1`
+        ZIPPATH=`ls -tr "$OUT"/ClwonUI-*.zip | tail -1`
         if [ ! -f $ZIPPATH ] ; then
             echo "Nothing to eat"
             return 1
@@ -100,13 +100,13 @@ function eat()
         echo "Waiting for device..."
         adb wait-for-device-recovery
         echo "Found device"
-        if (adb shell getprop ro.custom.device | grep -q "$CUSTOM_BUILD"); then
+        if (adb shell getprop ro.clown.device | grep -q "$CLOWN_BUILD"); then
             echo "Rebooting to sideload for install"
             adb reboot sideload-auto-reboot
             adb wait-for-sideload
             adb sideload $ZIPPATH
         else
-            echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+            echo "The connected device does not appear to be $CLOWN_BUILD, run away!"
         fi
         return $?
     else
@@ -307,7 +307,7 @@ function githubremote()
 
     local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
 
-    git remote add github https://github.com/PixelOS-AOSP/$PROJECT
+    git remote add github https://github.com/ClownUI/$PROJECT
     echo "Remote 'github' created"
 }
 
@@ -338,14 +338,14 @@ function installboot()
     adb wait-for-device-recovery
     adb root
     adb wait-for-device-recovery
-    if (adb shell getprop ro.custom.device | grep -q "$CUSTOM_BUILD");
+    if (adb shell getprop ro.clown.device | grep -q "$CLOWN_BUILD");
     then
         adb push $OUT/boot.img /cache/
         adb shell dd if=/cache/boot.img of=$PARTITION
         adb shell rm -rf /cache/boot.img
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CLOWN_BUILD, run away!"
     fi
 }
 
@@ -376,14 +376,14 @@ function installrecovery()
     adb wait-for-device-recovery
     adb root
     adb wait-for-device-recovery
-    if (adb shell getprop ro.custom.device | grep -q "$CUSTOM_BUILD");
+    if (adb shell getprop ro.clown.device | grep -q "$CLOWN_BUILD");
     then
         adb push $OUT/recovery.img /cache/
         adb shell dd if=/cache/recovery.img of=$PARTITION
         adb shell rm -rf /cache/recovery.img
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CLOWN_BUILD, run away!"
     fi
 }
 
@@ -459,7 +459,7 @@ function dopush()
         echo "Device Found."
     fi
 
-    if (adb shell getprop ro.custom.device | grep -q "$CUSTOM_BUILD") || [ "$FORCE_PUSH" = "true" ];
+    if (adb shell getprop ro.clown.device | grep -q "$CLOWN_BUILD") || [ "$FORCE_PUSH" = "true" ];
     then
     # retrieve IP and PORT info if we're using a TCP connection
     TCPIPPORT=$(adb devices \
@@ -578,7 +578,7 @@ EOF
     rm -f $OUT/.log
     return 0
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CLOWN_BUILD, run away!"
     fi
 }
 
@@ -591,7 +591,7 @@ alias cmkap='dopush cmka'
 
 function repopick() {
     T=$(gettop)
-    $T/vendor/aosp/build/tools/repopick.py $@
+    $T/vendor/clown/build/tools/repopick.py $@
 }
 
 function sort-blobs-list() {
