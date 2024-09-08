@@ -1,38 +1,63 @@
-PRODUCT_VERSION_MAJOR = 21
-PRODUCT_VERSION_MINOR = 0
+# Copyright (C) 2016 The Pure Nexus Project
+# Copyright (C) 2016 The JDCTeam
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-ifeq ($(LINEAGE_VERSION_APPEND_TIME_OF_DAY),true)
-    LINEAGE_BUILD_DATE := $(shell date -u +%Y%m%d_%H%M%S)
-else
-    LINEAGE_BUILD_DATE := $(shell date -u +%Y%m%d)
-endif
+CLOWN_MOD_VERSION := Reborn
+CLOWN_ANDROID = 15.0.0
+CLOWN_BUILD_TYPE := COMMUNITY
+CLOWN_MAINTAINER ?= UNKNOWN
 
-# Set LINEAGE_BUILDTYPE from the env RELEASE_TYPE, for jenkins compat
+CLOWN_DATE_YEAR := $(shell date -u +%Y)
+CLOWN_DATE_MONTH := $(shell date -u +%m)
+CLOWN_DATE_DAY := $(shell date -u +%d)
+CLOWN_DATE_HOUR := $(shell date -u +%H)
+CLOWN_DATE_MINUTE := $(shell date -u +%M)
+CLOWN_BUILD_DATE_UTC := $(shell date -d '$(CLOWN_DATE_YEAR)-$(CLOWN_DATE_MONTH)-$(CLOWN_DATE_DAY) $(CLOWN_DATE_HOUR):$(CLOWN_DATE_MINUTE) UTC' +%s)
+CLOWN_BUILD_DATE := $(CLOWN_DATE_YEAR)$(CLOWN_DATE_MONTH)$(CLOWN_DATE_DAY)-$(CLOWN_DATE_HOUR)$(CLOWN_DATE_MINUTE)
 
-ifndef LINEAGE_BUILDTYPE
-    ifdef RELEASE_TYPE
-        # Starting with "LINEAGE_" is optional
-        RELEASE_TYPE := $(shell echo $(RELEASE_TYPE) | sed -e 's|^LINEAGE_||g')
-        LINEAGE_BUILDTYPE := $(RELEASE_TYPE)
+CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
+
+ifeq ($(CLOWN_OFFICIAL), true)
+   LIST = $(shell cat official/clown.devices)
+    ifeq ($(filter $(CURRENT_DEVICE), $(LIST)), $(CURRENT_DEVICE))
+      IS_OFFICIAL=true
+      CLOWN_BUILD_TYPE := OFFICIAL
+
+    endif
+    ifneq ($(IS_OFFICIAL), true)
+       CLOWN_BUILD_TYPE := COMMUNITY
+       $(error Device is not official "$(CURRENT_DEVICE)")
     endif
 endif
 
-# Filter out random types, so it'll reset to UNOFFICIAL
-ifeq ($(filter RELEASE NIGHTLY SNAPSHOT EXPERIMENTAL,$(LINEAGE_BUILDTYPE)),)
-    LINEAGE_BUILDTYPE := UNOFFICIAL
-    LINEAGE_EXTRAVERSION :=
-endif
+CLOWN_BUILD_VERSION := ClownUI-$(CLOWN_MOD_VERSION)-$(CLOWN_ANDROID)-$(CLOWN_BUILD_TYPE)-$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d)
+CLOWN_VERSION := ClownUI-$(CLOWN_MOD_VERSION)-$(CLOWN_ANDROID)-$(CLOWN_BUILD_TYPE)-$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d)
 
-ifeq ($(LINEAGE_BUILDTYPE), UNOFFICIAL)
-    ifneq ($(TARGET_UNOFFICIAL_BUILD_ID),)
-        LINEAGE_EXTRAVERSION := -$(TARGET_UNOFFICIAL_BUILD_ID)
-    endif
-endif
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+  ro.clown.version=$(CLOWN_MOD_VERSION) \
+  ro.clown.android=$(CLOWN_ANDROID) \
+  ro.clown.buildtype=$(CLOWN_BUILD_TYPE) \
+  ro.clown.ziptype=$(CLOWN_BUILD_ZIP_TYPE) \
+  ro.clown.build_date=$(CLOWN_BUILD_DATE) \
+  ro.clown.build_date_utc=$(CLOWN_BUILD_DATE_UTC) \
+  ro.aosp.revision=$(AOSP_REVISION) \
+  ro.clown.maintainer=$(CLOWN_MAINTAINER)
 
-LINEAGE_VERSION_SUFFIX := $(LINEAGE_BUILD_DATE)-$(LINEAGE_BUILDTYPE)$(LINEAGE_EXTRAVERSION)-$(LINEAGE_BUILD)
+CLOWN_DISPLAY_VERSION := $(CLOWN_MOD_VERSION)-$(CLOWN_ANDROID)-$(CLOWN_BUILD_TYPE)-$(CURRENT_DEVICE)
 
-# Internal version
-LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(LINEAGE_VERSION_SUFFIX)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+  ro.clown.display.version=$(CLOWN_DISPLAY_VERSION)
 
-# Display version
-LINEAGE_DISPLAY_VERSION := $(PRODUCT_VERSION_MAJOR)-$(LINEAGE_VERSION_SUFFIX)
+# Signing
+-include vendor/clown-priv/keys/keys.mk
