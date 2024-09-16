@@ -4,5 +4,5 @@ ifeq ($(IS_OFFICIAL),true)
         Updates
 
     PRODUCT_COPY_FILES += \
-        vendor/clown/prebuilt/common/etc/init/init.custom-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.custom-updater.rc
+        vendor/clown/prebuilt/common/etc/init/init.clown-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.clown-updater.rc
 endif
