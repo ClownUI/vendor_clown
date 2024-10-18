@@ -2,17 +2,8 @@
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 $(call inherit-product-if-exists, vendor/certification/config.mk)
 
-# GMS
-WITH_GMS ?= true
-ifeq ($(WITH_GMS),true)
-ifeq ($(TARGET_USES_MINI_GAPPS),true)
-$(call inherit-product, vendor/gms/gms_mini.mk)
-else ifeq ($(TARGET_USES_PICO_GAPPS),true)
-$(call inherit-product, vendor/gms/gms_pico.mk)
-else
-$(call inherit-product, vendor/gms/gms_full.mk)
-endif
-endif
+# GApps
+$(call inherit-product, vendor/gms/products/gms.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
@@ -128,6 +119,7 @@ PRODUCT_PACKAGES += \
 
 # Config
 PRODUCT_PACKAGES += \
+    SimpleDeviceConfig \
     SimpleSettingsConfig
 
 # Extra tools
@@ -175,11 +167,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     rsync
 
-ifeq ($(WITH_GMS),false)
 # Storage manager
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.storage_manager.enabled=true
-endif
 
 # TouchGestures
 PRODUCT_PACKAGES += \
