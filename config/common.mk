@@ -1,7 +1,8 @@
 # Allow vendor/extra to override any property by setting it first
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 
-PRODUCT_BRAND ?= LineageOS
+# GApps
+$(call inherit-product, vendor/gms/products/gms.mk)
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -39,18 +40,18 @@ endif
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
-    vendor/lineage/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/lineage/prebuilt/common/bin/50-lineage.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-lineage.sh
+    vendor/clown/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
+    vendor/clown/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
+    vendor/clown/prebuilt/common/bin/50-clown.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-clown.sh
 
 PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
-    system/addon.d/50-lineage.sh
+    system/addon.d/50-clown.sh
 
 ifneq ($(strip $(AB_OTA_PARTITIONS) $(AB_OTA_POSTINSTALL_CONFIG)),)
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/bin/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
-    vendor/lineage/prebuilt/common/bin/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
-    vendor/lineage/prebuilt/common/bin/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
+    vendor/clown/prebuilt/common/bin/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
+    vendor/clown/prebuilt/common/bin/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
+    vendor/clown/prebuilt/common/bin/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
 
 PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
     system/bin/backuptool_ab.sh \
@@ -63,13 +64,28 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 endif
 endif
 
+# Blurs
+ifeq ($(TARGET_ENABLE_BLUR), true)
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    ro.sf.blurs_are_expensive=1 \
+    ro.surface_flinger.supports_background_blur=1 \
+    ro.launcher.blur.appLaunch=0
+endif
+
+# Disable async MTE on system_server
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    arm64.memtag.process.system_server=off
+# Enable dex2oat64 to do dexopt
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    dalvik.vm.dex2oat64.enabled=true
+    
 # Lineage-specific broadcast actions whitelist
 PRODUCT_COPY_FILES += \
-    vendor/lineage/config/permissions/lineage-sysconfig.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/lineage-sysconfig.xml
+    vendor/clown/config/permissions/lineage-sysconfig.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/lineage-sysconfig.xml
 
 # Lineage-specific init rc file
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/etc/init/init.lineage-system_ext.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.lineage-system_ext.rc
+    vendor/clown/prebuilt/common/etc/init/init.lineage-system_ext.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.lineage-system_ext.rc
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
@@ -85,15 +101,40 @@ PRODUCT_PACKAGES += \
 
 # This is Lineage!
 PRODUCT_COPY_FILES += \
-    vendor/lineage/config/permissions/org.lineageos.android.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/org.lineageos.android.xml
+    vendor/clown/config/permissions/org.lineageos.android.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/org.lineageos.android.xml
 
 # Enforce privapp-permissions whitelist
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.control_privapp_permissions=enforce
 
+# Additional props
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    dalvik.vm.debug.alloc=0 \
+    ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
+    ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
+    ro.error.receiver.system.apps=com.google.android.gms \
+    ro.setupwizard.enterprise_mode=1 \
+    ro.atrace.core.services=com.google.android.gms,com.google.android.gms.ui,com.google.android.gms.persistent \
+    ro.setupwizard.rotation_locked=true \
+    ro.com.google.ime.theme_id=5 \
+    ro.opa.eligible_device=true \
+    ro.com.android.wifi-watchlist=GoogleGuest \
+    ro.setupwizard.network_required=false \
+    ro.setupwizard.gservices_delay=-1 \
+    ro.setupwizard.mode=OPTIONAL \
+    setupwizard.feature.predeferred_enabled=false \
+    drm.service.enabled=true \
+    persist.sys.dun.override=0 \
+    persist.sys.disable_rescue=true
+
+# Disable touch video heatmap to reduce latency, motion jitter, and CPU usage
+# on supported devices with Deep Press input classifier HALs and models
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.input.video_enabled=false
+
 ifneq ($(TARGET_DISABLE_LINEAGE_SDK), true)
 # Lineage SDK
-include vendor/lineage/config/lineage_sdk_common.mk
+include vendor/clown/config/lineage_sdk_common.mk
 endif
 
 # Do not include art debug targets
@@ -109,45 +150,33 @@ PRODUCT_RESTRICT_VENDOR_FILES := false
 
 ifneq ($(TARGET_DISABLE_EPPE),true)
 # Require all requested packages to exist
-$(call enforce-product-packages-exist-internal,$(wildcard device/*/$(LINEAGE_BUILD)/$(TARGET_PRODUCT).mk),product_manifest.xml rild Calendar Launcher3 Launcher3Go Launcher3QuickStep Launcher3QuickStepGo android.hidl.memory@1.0-impl.vendor vndk_apex_snapshot_package)
+$(call enforce-product-packages-exist-internal,$(wildcard device/*/$(CLOWN_BUILD)/$(TARGET_PRODUCT).mk),product_manifest.xml rild Calendar Launcher3 Launcher3Go Launcher3QuickStep Launcher3QuickStepGo android.hidl.memory@1.0-impl.vendor vndk_apex_snapshot_package)
 endif
-
-# Bootanimation
-TARGET_SCREEN_WIDTH ?= 1080
-TARGET_SCREEN_HEIGHT ?= 1920
-PRODUCT_PACKAGES += \
-    bootanimation.zip
 
 # Build Manifest
 PRODUCT_PACKAGES += \
     build-manifest
 
 # Lineage packages
-ifeq ($(PRODUCT_IS_ATV),)
-PRODUCT_PACKAGES += \
-    ExactCalculator \
-    Jelly
-endif
-
 ifeq ($(PRODUCT_IS_AUTOMOTIVE),)
 PRODUCT_PACKAGES += \
-    LineageParts \
-    LineageSetupWizard
+    LineageParts 
 endif
 
 PRODUCT_PACKAGES += \
     LineageSettingsProvider \
+    MatLog \
     Updater
 
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/etc/init/init.lineage-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.lineage-updater.rc
+    vendor/clown/prebuilt/common/etc/init/init.clown-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.clown-updater.rc
 
 # Config
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig \
     SimpleSettingsConfig
 
-# Extra tools in Lineage
+# Extra tools
 PRODUCT_PACKAGES += \
     bash \
     curl \
@@ -189,7 +218,7 @@ PRODUCT_PACKAGES += \
     start-ssh
 
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/etc/init/init.openssh.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/init.openssh.rc
+    vendor/clown/prebuilt/common/etc/init/init.openssh.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/init.openssh.rc
 
 # rsync
 PRODUCT_PACKAGES += \
@@ -229,15 +258,10 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     dalvik.vm.systemuicompilerfilter=speed
 
-# SetupWizard
-PRODUCT_PRODUCT_PROPERTIES += \
-    setupwizard.theme=glif_v4 \
-    setupwizard.feature.day_night_mode_enabled=true
-
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lineage/overlay/no-rro
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/clown/overlay/no-rro
 PRODUCT_PACKAGE_OVERLAYS += \
-    vendor/lineage/overlay/common \
-    vendor/lineage/overlay/no-rro
+    vendor/clown/overlay/common \
+    vendor/clown/overlay/no-rro
 
 PRODUCT_PACKAGES += \
     DocumentsUIOverlay \
@@ -254,11 +278,14 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/crowdin/overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/crowdin/overlay
 
 PRODUCT_EXTRA_RECOVERY_KEYS += \
-    vendor/lineage/build/target/product/security/lineage
+    vendor/clown/build/target/product/security/clown
 
-include vendor/lineage/config/version.mk
+# Bootanimation
+include vendor/clown/config/bootanimation.mk
 
--include vendor/lineage-priv/keys/keys.mk
+include vendor/clown/config/version.mk
+
+-include vendor/clown-priv/keys/keys.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
--include vendor/lineage/config/partner_gms.mk
+-include vendor/clown/config/partner_gms.mk
