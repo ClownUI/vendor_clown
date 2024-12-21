@@ -131,7 +131,7 @@ $(call enforce-product-packages-exist-internal,$(wildcard device/*/$(CLOWN_BUILD
 endif
 
 # BtHelper
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     BtHelper
 
 # Config
@@ -139,7 +139,7 @@ PRODUCT_PACKAGES += \
     SimpleSettingsConfig
 
 # Extra tools in Lineage
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     bash \
     curl \
     getcap \
@@ -148,7 +148,7 @@ PRODUCT_PACKAGES += \
     setcap \
     vim
 
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     nano_recovery
 
 PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \

@@ -1,5 +1,5 @@
 # Updater
-ifeq ($(CLOWN_OFFICIAL),true)
-    PRODUCT_PACKAGES += \
+# ifeq ($(CLOWN_OFFICIAL),true)
+#     PRODUCT_PACKAGES += \
         Updater
-endif
+# endif
